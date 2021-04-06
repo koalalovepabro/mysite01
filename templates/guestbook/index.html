@@ -1,0 +1,51 @@
+{% extends '../base.html %}  <!--상속처리. base.html에서 공통부분 상속받기때문에, 여기에는 공통되지 않는 부분만 남겨주면 된다.-->
+{% load mathfilters %}
+
+{% block css_link %}
+<link href="/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block content %}
+			<div id="guestbook">
+				<form action="/guestbook/add" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="a" value="insert">
+					<table>
+						<tr>
+							<td>이름</td><td><input type="text" name="name" value=""></td>
+							<td>비밀번호</td><td><input type="password" name="pass" value=""></td>
+						</tr>
+						<tr>
+							<td colspan=4><textarea name="content" id="content"></textarea></td>
+						</tr>
+						<tr>
+							<td colspan=4 align=right><input type="submit" value=" 등록 "></td>
+						</tr>
+					</table>
+				</form>
+				<ul>
+					<li>
+
+						{% for guestbook in guestbook_list %}
+
+						<table>
+							<tr>
+								<td>{{ guestbook_list | length | sub:forloop.counter | add:1 }}</td>
+								<td>{{ guestbook.name }}</td>
+								<td>{{ guestbook.reg_date }}</td>
+								<td><a href="/guestbook/deleteform?no={{ guestbook.no }}">삭제</a></td>
+							</tr>
+							<tr>
+								<td colspan=4>
+								{{ guestbook.message | linebreaksbr }}
+								</td>
+							</tr>
+						</table>
+						<br>
+						{% endfor %}
+
+					</li>
+				</ul>
+			</div>
+{% endblock %}
