@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'board',
+    'user',
     'mathfilters',
     'main',
     'guestbook',
@@ -128,3 +130,7 @@ STATICFILES_DIRS = (
 )
 
 STATIC_URL = '/assets/'
+
+# session cookies(csrftoken) stored in memory
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True   # 메모리에 저장하고, 브라우저 닫으면 세션 종료하기
+                                         # 이걸 안해주면 디스크에 저장돼서, 로그아웃 안하고 닫으면 다시 열었을때 로그인 상태로 접속된다.

@@ -1,0 +1,34 @@
+{% extends '../base.html %}  <!--상속처리. base.html에서 공통부분 상속받기때문에, 여기에는 공통되지 않는 부분만 남겨주면 된다.-->
+
+{% block css_link %}
+<link href="/assets/css/user.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block content %}
+			<div id="user">
+
+				<form id="join-form" name="joinForm" method="post" action="/user/update">
+					{% csrf_token %}
+					<label class="block-label" for="name">이름</label>
+					<input id="name" name="name" type="text" value="{{ info.name }}">
+
+					<label class="block-label">이메일</label>
+
+					<h4>{{ info.email }}</h4>
+
+					
+					<label class="block-label">패스워드</label>
+					<input name="password" type="password" value="{{ info.password }}">
+					
+					<fieldset>
+						<legend>성별</legend>
+						<label>여</label> <input type="radio" name="gender" value="female" {% if info.gender != 'male' %} checked="checked" {% endif %}>
+						<label>남</label> <input type="radio" name="gender" value="male" {% if info.gender != 'female' %} checked="checked" {% endif %} >
+					</fieldset>
+
+					<input type="submit" value="수정하기">
+					
+				</form>
+			</div>
+{% endblock %}
