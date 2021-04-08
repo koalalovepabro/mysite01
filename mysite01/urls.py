@@ -35,10 +35,14 @@ urlpatterns = [
     path('user/loginform', userviews.loginform),
     path('user/login', userviews.login),
     path('user/logout', userviews.logout),
+
     path('user/updateform', userviews.updateform),
     path('user/update', userviews.update),
     path('user/updatesuccess', userviews.updatesuccess),
 
     path('board/', boardviews.index),
     path('board/view', boardviews.view),
+    path('board/writeform', boardviews.writeform),
+    path('board/deleteform', boardviews.deleteform),
+
 ]
