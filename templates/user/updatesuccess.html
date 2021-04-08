@@ -1,4 +1,4 @@
-{% extends '../base.html %}  <!--상속처리. base.html에서 공통부분 상속받기때문에, 여기에는 공통되지 않는 부분만 남겨주면 된다.-->
+{% extends '../base.html' %}  <!--상속처리. base.html에서 공통부분 상속받기때문에, 여기에는 공통되지 않는 부분만 남겨주면 된다.-->
 
 {% block css_link %}
 <link href="/assets/css/user.css" rel="stylesheet" type="text/css">
@@ -9,9 +9,11 @@
 
 			<div id="user">
 				<p class="jr-success">
-					회원정보 수정이 완료되었습니다.
+					회원정보 수정이 완료되었습니다.</br></br>
+					소중한 개인정보 보호를 위해 로그아웃 되었으니,</br>
+					다시 로그인 해 주세요 :)
 					<br><br>
-					<a href="/">메인으로 돌아가기</a>
+					<a href="/user/loginform">로그인 하기</a>
 				</p>				
 			</div>
 

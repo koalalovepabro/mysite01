@@ -1,4 +1,4 @@
-{% extends '../base.html %}  <!--상속처리. base.html에서 공통부분 상속받기때문에, 여기에는 공통되지 않는 부분만 남겨주면 된다.-->
+{% extends '../base.html' %}  <!--상속처리. base.html에서 공통부분 상속받기때문에, 여기에는 공통되지 않는 부분만 남겨주면 된다.-->
 
 {% block css_link %}
 <link href="/assets/css/user.css" rel="stylesheet" type="text/css">
@@ -9,13 +9,15 @@
 			<div id="user">
 
 				<form id="join-form" name="joinForm" method="post" action="/user/update">
-					{% csrf_token %}
+				{% csrf_token %}
+					<input type="hidden" name="no" value="{{ request.GET.no }}">	 <!--회원의 no를 숨겨서 가져옴-->
+																					 <!--update할때 no를 조건으로 실행 -->
+
 					<label class="block-label" for="name">이름</label>
 					<input id="name" name="name" type="text" value="{{ info.name }}">
 
 					<label class="block-label">이메일</label>
-
-					<h4>{{ info.email }}</h4>
+					<h4>{{ info.email }}</h4>    <!--변경할 수 없는 값이니까 input태그가 아니라 그냥 텍스트로-->
 
 					
 					<label class="block-label">패스워드</label>
@@ -28,7 +30,6 @@
 					</fieldset>
 
 					<input type="submit" value="수정하기">
-					
 				</form>
 			</div>
 {% endblock %}
