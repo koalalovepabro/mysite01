@@ -28,6 +28,7 @@ urlpatterns = [
     path('guestbook/deleteform', guestbookviews.deleteform),
     path('guestbook/delete', guestbookviews.delete),
 
+
     path('user/joinform', userviews.joinform),
     path('user/join', userviews.join),
     path('user/joinsuccess', userviews.joinsuccess),
@@ -40,9 +41,19 @@ urlpatterns = [
     path('user/update', userviews.update),
     path('user/updatesuccess', userviews.updatesuccess),
 
+
     path('board/', boardviews.index),
     path('board/view', boardviews.view),
+
     path('board/writeform', boardviews.writeform),
-    path('board/deleteform', boardviews.deleteform),
+    path('board/write', boardviews.write),
+
+    path('board/updateform', boardviews.updateform),
+    path('board/update', boardviews.update),
+
+    path('board/delete', boardviews.delete),
+
+    path('board/replyform', boardviews.replyform),
+    path('board/reply', boardviews.reply),
 
 ]

@@ -13,23 +13,30 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>제목입니다.</td>
+						<td>{{ post.title }}</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								내용 1입니다.<br>
-								내용 2입니다.<br>
-								내용 3입니다.
+								{{ post.contents | linebreaksbr }}
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="">글목록</a>
-					<a href="">글수정</a>
-					<a href="">답글</a>
+					<a href="/board">글목록</a>
+
+					<!-- 로그인 상태일 때 -->
+					{% if request.session.authuser is not None %}
+						{% if post.user_no == request.session.authuser.no %} <!--작성자 넘버와 로그인 세션 넘버가 동일할 경우-->
+					<a href="/board/updateform?no={{ post.no }}">글수정</a> <!-- 글수정 버튼을 보여줘라 -->
+						{% endif %}
+					{% endif %}
+
+					{% if request.session.authuser is not None %}
+						<a href="/board/replyform?no={{ post.no }}"?>답글</a>
+					{% endif %}
 				</div>
 			</div>
 {% endblock %}

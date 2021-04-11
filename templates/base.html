@@ -18,7 +18,7 @@
 				{% else %}  							<!-- 회원일 경우  -> 회원정보수정과 로그아웃-->
 					<li><a href="/user/updateform?no={{ request.session.authuser.no }}">회원정보수정</a><li>
 					<li><a href="/user/logout">로그아웃</a><li>
-					<li>{{ request.session.authuser.name }}님 안녕하세요 ^^;</li>
+					<li>{{ request.session.authuser.name }}님, 안녕하세요:)</li>
 				{% endif %}
 			</ul>
 		</div>

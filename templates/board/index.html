@@ -7,10 +7,9 @@
 
 
 {% block content %}
-
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="/board" method="get">
+					<input type="text" id="kwd" name="kwd" value="{{ kwd }}">
 					<input type="submit" value="찾기">
 				</form>
 
@@ -34,14 +33,19 @@
 							<img src="/assets/images/reply.png">
 							{% endif %}
 
-							{{ boardlist.title }}{{ boardlist.depth }}</a></td>
+							{{ boardlist.title }}</a></td>
+
 						<td>{{ boardlist.name }}</td>
 						<td>{{ boardlist.hit }}</td>
-						<td>{{ boardlist.reg_date }}</td>
-						<td><a href="/board/deleteform?no={{ boardlist.no }}" class="del">삭제</a></td>
+						<td>{{ boardlist.reg_date | date:'Y-m-d H:i:s' }}</td>
+						<td>{% if request.session.authuser is not None%} <!--로그인 상태일 때-->
+							{% if boardlist.user_no == request.session.authuser.no %} <!--작성자 넘버와 로그인 세션 넘버가 동일할 경우-->
+							<a href="/board/delete?no={{ boardlist.no }}" class="del">삭제</a></td> <!--삭제 버튼을 보여줘라-->
+							{% endif %}
+							{% endif %}
 					</tr>
-
 					{% endfor %}
+
 <!--					<tr>-->
 <!--						<td>3</td>-->
 <!--						<td><a href="" style="text-align:left; padding-left:0px">세 번째 글입니다.</a></td>-->
@@ -71,21 +75,32 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>    <!-- 이전페이지(prevpage)가 n보다 크면 표시 -->
-						<li><a href="">1</a></li>    <!-- 이전페이지 -->
-						<li class="selected">2</li>  <!-- 현재페이지 (if 조건문 줘서 빨간색으로 표시) -->
-						<li><a href="">3</a></li>    <!-- 다음페이지 -->
-						<li>4</li>  				 <!-- 없는 페이지. (흐린 회색으로 표시) -->
-						<li>5</li>  				 <!-- 없는 페이지. (흐린 회색으로 표시) -->
-						<li><a href="">▶</a></li>    <!-- 다음페이지(nextpage)가 m보다 크면 표시 -->
+						<li><a href="/board/?p={{ pager.prevpage }}&kwd={{ keyword }}">◀</a></li>    <!-- 이전페이지(prevpage)가 n보다 크면 표시 -->
+						{% for i in pager.paging %}  <!-- 1~5까지의 페이지를 띄우는 범위-->
+							{% if pager.curpage == i %}
+								<li class="selected">{{i}}</li>    <!-- 현재페이지 (if 조건문 줘서 빨간색으로 표시) -->
+							{% elif i > pager.pagecount %}
+								<li>{{i}}</li>
+							{% else %}
+								<li><a href="/board/?p={{i}}&kwd={{keyword}}">{{i}}</a></li>
+							{% endif %}
+						{% endfor %}
+						<li><a href="/board/?p={{ pager.nextpage }}&kwd={{ keyword }}">▶</a></li> <!-- 다음페이지(nextpage)가 m보다 크면 표시 -->
+
+<!--						<li class="selected">2</li>  &lt;!&ndash; 현재페이지 (if 조건문 줘서 빨간색으로 표시) &ndash;&gt;-->
+<!--						<li><a href="">3</a></li>    &lt;!&ndash; 다음페이지 &ndash;&gt;-->
+<!--						<li>4</li>  				 &lt;!&ndash; 없는 페이지. (흐린 회색으로 표시) &ndash;&gt;-->
+<!--						<li>5</li>  				 &lt;!&ndash; 없는 페이지. (흐린 회색으로 표시) &ndash;&gt;-->
+<!--						<li><a href="">▶</a></li>    &lt;!&ndash; 다음페이지(nextpage)가 m보다 크면 표시 &ndash;&gt;-->
 					</ul>
 				</div>					
-				<!-- pager 추가 -->
+
+				<div class="bottom">
 
 				{% if request.session.authuser is not None %}
-				<div class="bottom">
 					<a href="/board/writeform" id="new-book">글쓰기</a>
-				</div>
 				{% endif %}
+
+				</div>
 			</div>
 {% endblock %}
